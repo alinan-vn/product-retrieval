@@ -1,5 +1,7 @@
 package com.hcl.productcreator.store;
 
-public interface ProductEntityCrudRepository {
+import org.springframework.data.repository.CrudRepository;
+
+public interface ProductEntityCrudRepository extends CrudRepository<ProductEntity, Long>{
 
 }
