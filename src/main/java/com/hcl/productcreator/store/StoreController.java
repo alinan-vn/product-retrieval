@@ -29,11 +29,6 @@ public class StoreController {
 	@Autowired
 	ProductEntityCrudRepository productEntityCrudRepository;
 	
-	@GetMapping(path = "/contact")
-	String contact() {
-		return "phone: 3123 21 3212 3";
-	}
-	
 	@GetMapping(path="/createProduct", produces = "text/html")
 	String showProductForm() {
 		
@@ -43,12 +38,14 @@ public class StoreController {
 		output += "Price: <input name='price' type='text' /><br />";
 		output += "<input type='submit' />";
 		output += "</form>";
+		output += "<br /><br />";
+		output += "<a href='http://localhost:8080/home'>HOME</a>";
 		
 		return output;
 	}
 	
 	@PostMapping(path = "/createProduct")
-	void createProduct(@RequestBody ProductEntity product) {
+	void createProduct(@ModelAttribute ProductEntity product) {
 		
 		if (product == null || product.getName() == null) {
 			throw new RuntimeException("Name required");
@@ -85,7 +82,8 @@ public class StoreController {
 		
 		Iterable<ProductEntity> products = productEntityCrudRepository.findAll();
 		
-		String allProducts = "<h2>Our Current Products!</h2>";
+		String allProducts = "<a href='http://localhost:8080/createProduct'>CREATE A PRODUCT</a>";
+		allProducts += "<h2>Our Current Products!</h2>";
 		allProducts += "<h3><strong>NAME --- TYPE --- PRICE</strong></h3>";
 		allProducts += "<ul>";
 		for (ProductEntity p : products) {
